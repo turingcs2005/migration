@@ -1,4 +1,4 @@
-const { sequelize, Mom, Dad } = require('./models');
+const { sequelize, Dad } = require('./models');
 
 sequelize.authenticate()
 .then( () => console.log('Database connection successful!'))
@@ -6,23 +6,9 @@ sequelize.authenticate()
 
 (async () => {
     try {
-        await sequelize.sync({force: true});
-        const Susan = await Mom.create({
-            firstName: 'Susan', lastName: 'Boyle'
-        });
-
         const James = await Dad.create({
-            firstName: 'James', lastName: 'Boyle'
+            firstName: 'James'
         });
-
-        await James.setMom(Susan);
-
-        await James.reload({
-            include: Mom
-        });
-
-        console.log(James.Mom.firstName);  // Susan
-
     } catch (e) {
         console.log('Error:', e);
     }
